@@ -1,1 +1,15 @@
+version: '3.8'
+services:
+  # OPAL Server: Watches your Git repo
+  opal_server:
+    image: permitio/opal-server
+    environment:
+      - OPAL_POLICY_REPO_URL=https://github.com/Vinith215/my-stock-policies.git
+    ports: ["7002:7002"]
 
+  # OPAL Client: Runs OPA and keeps it in sync with the Server
+  opal_client:
+    image: permitio/opal-client
+    environment:
+      - OPAL_SERVER_URL=http://opal_server:7002
+    ports: ["8181:8181"]
